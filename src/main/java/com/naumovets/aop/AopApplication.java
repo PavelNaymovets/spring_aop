@@ -29,6 +29,8 @@ public class AopApplication {
 
 		//@Time
 		log.info(takeTime.takeTheTime("Возьми свое время"));
+		log.info(userService.bar("Возьми свое время"));
+		log.info(orderService.foo("Возьми свое время"));
 
 	}
 

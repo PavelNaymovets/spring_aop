@@ -53,41 +53,41 @@ public class TimerAspect {
     }
 
     //Достать аргументы из аннотации и отпечатать их, если исполняемые метод выбросил исключение
-    @Around("targetPointcut()")
-    public Object aroundAnnotatedMethodsPointcut(ProceedingJoinPoint pjp) throws Throwable {
-        try {
-            return pjp.proceed();
-        } catch (NullPointerException e) {
-            String className = pjp.getTarget().getClass().getName();
-            String methodName = pjp.getSignature().getName();
-
-            String errorMessage = null;
-            String defaultErrorMessage = extractAnnotationValue(pjp);
-            if (defaultErrorMessage != null && !defaultErrorMessage.isBlank()) {
-                errorMessage = defaultErrorMessage;
-            } else {
-                errorMessage = e.getMessage();
-            }
-            log.error("Во время исполнения {}#{} произошла ошибка: {}", className, methodName, errorMessage);
-            return null;
-        }
-    }
-
-    //Достать аргументы из аннотации
-    private String extractAnnotationValue(ProceedingJoinPoint pjp) {
-        MethodSignature signature = (MethodSignature) pjp.getSignature();
-        Method method = signature.getMethod();
-        Timer annotationOnMethod =
-                method.getAnnotation(Timer.class);
-
-        if (annotationOnMethod != null) {
-            return annotationOnMethod.value();
-        }
-
-        Class<?> beanClass = pjp.getTarget().getClass();
-        Timer annotationOnClass =
-                beanClass.getAnnotation(Timer.class);
-
-        return annotationOnClass.value();
-    }
+//    @Around("targetPointcut()")
+//    public Object aroundAnnotatedMethodsPointcut(ProceedingJoinPoint pjp) throws Throwable {
+//        try {
+//            return pjp.proceed();
+//        } catch (NullPointerException e) {
+//            String className = pjp.getTarget().getClass().getName();
+//            String methodName = pjp.getSignature().getName();
+//
+//            String errorMessage = null;
+//            String defaultErrorMessage = extractAnnotationValue(pjp);
+//            if (defaultErrorMessage != null && !defaultErrorMessage.isBlank()) {
+//                errorMessage = defaultErrorMessage;
+//            } else {
+//                errorMessage = e.getMessage();
+//            }
+//            log.error("Во время исполнения {}#{} произошла ошибка: {}", className, methodName, errorMessage);
+//            return null;
+//        }
+//    }
+//
+//    //Достать аргументы из аннотации
+//    private String extractAnnotationValue(ProceedingJoinPoint pjp) {
+//        MethodSignature signature = (MethodSignature) pjp.getSignature();
+//        Method method = signature.getMethod();
+//        Timer annotationOnMethod =
+//                method.getAnnotation(Timer.class);
+//
+//        if (annotationOnMethod != null) {
+//            return annotationOnMethod.value();
+//        }
+//
+//        Class<?> beanClass = pjp.getTarget().getClass();
+//        Timer annotationOnClass =
+//                beanClass.getAnnotation(Timer.class);
+//
+//        return annotationOnClass.value();
+//    }
 }
